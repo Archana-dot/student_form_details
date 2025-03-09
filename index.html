@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            flex-direction: column;
+        }
+
+        .table {
+            border: 1px solid black;
+        }
+
+        tbody,
+        tr,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        .save-btn {
+            background-color: aqua;
+        }
+        #deleteBtn{
+           background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>STUDENT FORM</h1>
+    <form>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <label>Name :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="name" name="name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Age :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="age" name="age" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Gender :</label>
+                    </td>
+                    <td>
+                        <input type="radio" value="Male" name="gender" />Male
+                        <input type="radio" value="Female" name="gender" />Female
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Course :</label>
+                    </td>
+                    <td>
+                        <input type="text" id="course" name="course" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Email :</label>
+                    </td>
+                    <td>
+                        <input type="email" id="email" name="email" />
+                    </td>
+                </tr>
+                <tr colspan="2" rowspan="2">
+                    <td colspan="2" rowspan="2">
+                        <button class="save-btn" style="width: 100%;" onclick="onclickSave(event)"
+                            type="submit">Save</button>
+                    </td>
+                </tr>
+        </table>
+    </form>
+    <section>
+        <table id="studentTable">
+            <thead>
+                <th>NAME</th>
+                <th>AGE</th>
+                <th>COURSE</th>
+                <th>EMAIL</th>
+                <th>ACTION</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        function onclickSave(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const form = document.querySelector("form"); // Get the form
+            const formData = new FormData(form); 
+
+            console.log("FormData object:", formData);
+            console.log("Name:", formData.get("name")); 
+
+            let userDetails = {
+                name: formData.get("name"),
+                age: formData.get("age"),
+                course: formData.get("course"),
+                gender: formData.get("gender"),
+                email: formData.get("email"),
+            }
+            const studentTable = document.getElementById("studentTable"); // Get the table
+           
+
+            const row = studentTable.insertRow(); // Create a new row
+            console.log("userDetails", studentTable, row);
+
+            row.innerHTML = `
+                <td>${row.rowIndex}</td>
+                <td>${userDetails.name}</td>
+                <td>${userDetails.age}</td>
+                <td>${userDetails.course}</td>
+                <td>${userDetails.gender}</td>
+                <td>${userDetails.email}</td>
+               
+                <td>
+                    <button id="deleteBtn" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `
+
+            form.reset();
+
+
+        }
+
+        function deleteRow(button) {
+            button.parentNode.parentNode.remove();
+        }
+
+
+    </script>
+</body>
+
+</html>
